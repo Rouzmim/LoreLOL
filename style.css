@@ -429,3 +429,18 @@ footer{
 @media (prefers-reduced-motion: reduce){
   *{transition:none !important;}
 }
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.btn.danger{
+  background:#7a1f1f;
+  color:white;
+  border:none;
+}
+
+.btn.danger:hover{
+  background:#992828;
+}
