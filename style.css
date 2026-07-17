@@ -376,10 +376,25 @@ footer{
 }
 
 .difficulty {
-  padding:4px 10px;
-  border-radius:20px;
-  font-size:0.8rem;
-  font-weight:bold;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.difficulty.easy {
+  background: #d9f2d9;
+  color: #176b17;
+}
+
+.difficulty.medium {
+  background: #ffe6b3;
+  color: #8a5200;
+}
+
+.difficulty.hard {
+  background: #ffd6d6;
+  color: #9b0000;
 }
 
 .difficulty.easy {
