@@ -167,23 +167,12 @@ function renderQCM(card, item, answered){
 
   card.innerHTML = `
     <div class="question-meta">
-      <p class="theme-tag">${item.region}</p>
-      <span class="difficulty ${item.difficulty}">
-        ${difficultyLabel[item.difficulty] || ""}
-      </span>
-    </div>
+  <span class="difficulty ${item.difficulty}">
+    ${difficultyLabel[item.difficulty] || ""}
+  </span>
+</div>
 
-    <p class="question">${item.question}</p>
-
-    <div class="lore-tags">
-      ${item.tags ? item.tags.map(tag => `<span>#${tag}</span>`).join('') : ''}
-    </div>
-
-    <div class="champions">
-      ${item.champions && item.champions.length 
-        ? "Champions liés : " + item.champions.join(", ")
-        : ""}
-    </div>
+<p class="question">${item.question}</p>
 
     <div class="options" id="optionsWrap"></div>
     <div class="feedback" id="feedback"></div>
