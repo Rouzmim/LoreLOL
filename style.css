@@ -430,9 +430,16 @@ footer{
   *{transition:none !important;}
 }
 .header-actions{
-  display:flex;
+  display:flex !important;
   align-items:center;
   gap:12px;
+  border:2px solid red;
+}
+
+#backToMenuBtn{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
 }
 
 .btn.danger{
@@ -444,3 +451,4 @@ footer{
 .btn.danger:hover{
   background:#992828;
 }
+
