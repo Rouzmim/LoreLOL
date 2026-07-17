@@ -59,14 +59,30 @@ function renderMenu(){
 }
 
 // ---------- Démarrage d'une partie ----------
+// ---------- Démarrage d'une partie ----------
 function startGame(modeKey){
   const mode = MODES[modeKey];
+
   state.screen = 'playing';
   state.mode = modeKey;
-  state.questions = pickRandom(mode.pool, SESSION_LENGTH);
+
+  state.questions = pickRandom(mode.pool, SESSION_LENGTH).map(q => {
+    const copy = {...q};
+
+    // Réinitialisation uniquement pour le mode QCM
+    if(modeKey === 'qcm'){
+      copy.shuffledOptions = null;
+      copy.correctShuffled = null;
+      copy._lastPick = null;
+    }
+
+    return copy;
+  });
+
   state.index = 0;
   state.answers = new Array(state.questions.length).fill(null);
   state.cluesRevealed = new Array(state.questions.length).fill(1);
+
   render();
 }
 
@@ -178,26 +194,50 @@ function renderQCM(card, item, answered){
     <div class="feedback" id="feedback"></div>
     ${navButtonsHTML()}
   `;
+  if(!item.shuffledOptions){
+  item.shuffledOptions = item.options.map((text, index) => ({
+    text:text,
+    correct:index === item.correct
+  }));
+
+  item.shuffledOptions = shuffle(item.shuffledOptions);
+
+  item.correctShuffled = item.shuffledOptions.findIndex(o => o.correct);
+}
   const wrap = document.getElementById('optionsWrap');
   const letters = ['A','B','C','D'];
-  item.options.forEach((optText, idx) => {
+item.shuffledOptions.forEach((option, idx) => {
     const b = document.createElement('button');
     b.className = 'opt';
-    b.innerHTML = `<span class="letter">${letters[idx]}</span><span>${optText}</span>`;
+    b.innerHTML = `<span class="letter">${letters[idx]}</span><span>${option.text}</span>`;
+
     if(answered){
       b.disabled = true;
-      if(idx === item.correct) b.classList.add('is-correct');
-      else if(item._lastPick === idx) b.classList.add('is-wrong');
+
+      if(idx === item.correctShuffled) {
+        b.classList.add('is-correct');
+      }
+      else if(item._lastPick === idx) {
+        b.classList.add('is-wrong');
+      }
     }
+
     b.addEventListener('click', () => {
       if(state.answers[state.index] !== null) return;
+
       item._lastPick = idx;
-      const isCorrect = idx === item.correct;
+
+      const isCorrect = idx === item.correctShuffled;
+
       state.answers[state.index] = isCorrect;
-      updateScore(); updateDots(); renderQuestion();
+
+      updateScore();
+      updateDots();
+      renderQuestion();
     });
+
     wrap.appendChild(b);
-  });
+});
   showFeedback(answered, state.answers[state.index], item.explanation);
   bindNavButtons();
 }
@@ -264,7 +304,7 @@ function renderQSQ(card, item, answered){
 
   const wrap = document.getElementById('optionsWrap');
   const letters = ['A','B','C','D'];
-  item.options.forEach((optText, idx) => {
+ item.options.forEach((optText, idx) => {
     const b = document.createElement('button');
     b.className = 'opt';
     b.innerHTML = `<span class="letter">${letters[idx]}</span><span>${optText}</span>`;
@@ -276,7 +316,7 @@ function renderQSQ(card, item, answered){
     b.addEventListener('click', () => {
       if(state.answers[state.index] !== null) return;
       item._lastPick = idx;
-      const isCorrect = idx === item.correct;
+      const isCorrect = idx === item.correctShuffled;
       state.answers[state.index] = isCorrect;
       state.cluesRevealed[state.index] = item.clues.length;
       updateScore(); updateDots(); renderQuestion();
