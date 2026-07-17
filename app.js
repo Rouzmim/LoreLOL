@@ -71,9 +71,9 @@ function startGame(modeKey){
 
     // Réinitialisation uniquement pour le mode QCM
     if(modeKey === 'qcm'){
-      copy.shuffledOptions = null;
-      copy.correctShuffled = null;
-      copy._lastPick = null;
+copy.shuffledOptions = null;
+copy.correctShuffled = null;
+copy._lastPick = null;
     }
 
     return copy;
@@ -183,44 +183,62 @@ function renderQCM(card, item, answered){
 
   card.innerHTML = `
     <div class="question-meta">
-  <span class="difficulty ${item.difficulty}">
-    ${difficultyLabel[item.difficulty] || ""}
-  </span>
-</div>
+      <span class="difficulty ${item.difficulty}">
+        ${difficultyLabel[item.difficulty] || ""}
+      </span>
+    </div>
 
-<p class="question">${item.question}</p>
+    <p class="question">${item.question}</p>
 
     <div class="options" id="optionsWrap"></div>
     <div class="feedback" id="feedback"></div>
+
     ${navButtonsHTML()}
   `;
-const shuffledOptions = shuffle(
-  item.options.map((text, index) => ({
-    text: text,
-    correct: index === item.correct
-  }))
-);
 
-const correctShuffled = shuffledOptions.findIndex(o => o.correct);
+  // Mélange une seule fois par question
+  if(!item.shuffledOptions){
+
+    item.shuffledOptions = shuffle(
+      item.options.map((text, index) => ({
+        text: text,
+        correct: index === item.correct
+      }))
+    );
+
+    item.correctShuffled = item.shuffledOptions.findIndex(
+      option => option.correct
+    );
+  }
+
   const wrap = document.getElementById('optionsWrap');
   const letters = ['A','B','C','D'];
-item.shuffledOptions.forEach((option, idx) => {
+
+  item.shuffledOptions.forEach((option, idx) => {
+
     const b = document.createElement('button');
+
     b.className = 'opt';
-    b.innerHTML = `<span class="letter">${letters[idx]}</span><span>${option.text}</span>`;
+
+    b.innerHTML = `
+      <span class="letter">${letters[idx]}</span>
+      <span>${option.text}</span>
+    `;
 
     if(answered){
+
       b.disabled = true;
 
-      if(idx === item.correctShuffled) {
+      if(idx === item.correctShuffled){
         b.classList.add('is-correct');
       }
-      else if(item._lastPick === idx) {
+      else if(item._lastPick === idx){
         b.classList.add('is-wrong');
       }
     }
 
     b.addEventListener('click', () => {
+
       if(state.answers[state.index] !== null) return;
 
       item._lastPick = idx;
@@ -232,43 +250,85 @@ item.shuffledOptions.forEach((option, idx) => {
       updateScore();
       updateDots();
       renderQuestion();
+
     });
 
     wrap.appendChild(b);
-});
-  showFeedback(answered, state.answers[state.index], item.explanation);
+  });
+
+  showFeedback(
+    answered,
+    state.answers[state.index],
+    item.explanation
+  );
+
   bindNavButtons();
 }
 
 // ---------- Mode Vrai / Faux ----------
 function renderVF(card, item, answered){
+
   card.innerHTML = `
-    <p class="theme-tag">${item.region}</p>
+    <div class="question-meta">
+      <span class="question-type">Vrai ou Faux</span>
+    </div>
+
     <p class="question">${item.statement}</p>
+
     <div class="options vf-options" id="optionsWrap"></div>
     <div class="feedback" id="feedback"></div>
+
     ${navButtonsHTML()}
   `;
+
   const wrap = document.getElementById('optionsWrap');
-  [{label:'Vrai', val:true},{label:'Faux', val:false}].forEach(choice => {
+
+  [
+    {label:'Vrai', val:true},
+    {label:'Faux', val:false}
+  ].forEach(choice => {
+
     const b = document.createElement('button');
+
     b.className = 'opt vf-opt';
     b.textContent = choice.label;
+
     if(answered){
       b.disabled = true;
-      if(choice.val === item.correct) b.classList.add('is-correct');
-      else if(item._lastPick === choice.val) b.classList.add('is-wrong');
+
+      if(choice.val === item.correct){
+        b.classList.add('is-correct');
+      }
+      else if(item._lastPick === choice.val){
+        b.classList.add('is-wrong');
+      }
     }
+
     b.addEventListener('click', () => {
+
       if(state.answers[state.index] !== null) return;
+
       item._lastPick = choice.val;
+
       const isCorrect = choice.val === item.correct;
+
       state.answers[state.index] = isCorrect;
-      updateScore(); updateDots(); renderQuestion();
+
+      updateScore();
+      updateDots();
+      renderQuestion();
+
     });
+
     wrap.appendChild(b);
   });
-  showFeedback(answered, state.answers[state.index], item.explanation);
+
+  showFeedback(
+    answered,
+    state.answers[state.index],
+    item.explanation
+  );
+
   bindNavButtons();
 }
 
