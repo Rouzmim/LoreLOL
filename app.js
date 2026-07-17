@@ -89,16 +89,23 @@ copy._lastPick = null;
 // ---------- Rendu : Jeu ----------
 function renderGame(){
   root.innerHTML = `
-    <header class="top compact">
-      <div>
-        <p class="brand-eyebrow">${MODES[state.mode].label}</p>
-        <h1 class="game-title">Runeterra <span>Lore Quiz</span></h1>
-      </div>
-      <div class="score-box">
-        Score
-        <b id="scoreDisplay">${countCorrect()} / ${state.questions.length}</b>
-      </div>
-    </header>
+<header class="top compact">
+  <div>
+    <p class="brand-eyebrow">${MODES[state.mode].label}</p>
+    <h1 class="game-title">Runeterra <span>Lore Quiz</span></h1>
+  </div>
+
+  <div class="header-actions">
+    <button class="btn danger" id="backToMenuBtn">
+      Quitter la partie
+    </button>
+
+    <div class="score-box">
+      Score
+      <b id="scoreDisplay">${countCorrect()} / ${state.questions.length}</b>
+    </div>
+  </div>
+</header>
     <div class="layout">
       <nav class="dots" id="dotsNav" aria-label="Progression"></nav>
       <main class="card" id="card"></main>
@@ -107,6 +114,21 @@ function renderGame(){
   `;
   buildDots();
   renderQuestion();
+  buildDots();
+renderQuestion();
+
+document.getElementById('backToMenuBtn')
+  .addEventListener('click', () => {
+    if(confirm("Quitter la partie en cours ? Votre progression sera perdue.")){
+      state.screen = 'menu';
+      state.mode = null;
+      state.questions = [];
+      state.index = 0;
+      state.answers = [];
+      state.cluesRevealed = [];
+      render();
+    }
+  });
 }
 
 function buildDots(){
