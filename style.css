@@ -436,11 +436,6 @@ footer{
   border:2px solid red;
 }
 
-#backToMenuBtn{
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-}
 
 .btn.danger{
   background:#7a1f1f;
