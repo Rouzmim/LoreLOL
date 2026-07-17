@@ -3,34 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Runeterra A–Z · Quiz de lore</title>
+<title>Runeterra Lore Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app">
+<div class="app" id="root"></div>
 
-  <header class="top">
-    <div>
-      <p class="brand-eyebrow">Encyclopédie non-officielle · Fan quiz</p>
-      <h1>Runeterra <span>A–Z</span></h1>
-    </div>
-    <div class="score-box">
-      Score
-      <b id="scoreDisplay">0 / 26</b>
-    </div>
-  </header>
-
-  <div class="layout">
-    <nav class="runes" id="runeNav" aria-label="Progression alphabétique"></nav>
-
-    <main class="card" id="card"></main>
-  </div>
-
-  <footer>Quiz de trivia créé pour les fans — League of Legends et son univers appartiennent à Riot Games.</footer>
-</div>
-
-<script src="script.js"></script>
+<script src="data/qcm.js"></script>
+<script src="data/vf.js"></script>
+<script src="data/qsq.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
