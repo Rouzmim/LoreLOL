@@ -194,16 +194,14 @@ function renderQCM(card, item, answered){
     <div class="feedback" id="feedback"></div>
     ${navButtonsHTML()}
   `;
-  if(!item.shuffledOptions){
-  item.shuffledOptions = item.options.map((text, index) => ({
-    text:text,
-    correct:index === item.correct
-  }));
+const shuffledOptions = shuffle(
+  item.options.map((text, index) => ({
+    text: text,
+    correct: index === item.correct
+  }))
+);
 
-  item.shuffledOptions = shuffle(item.shuffledOptions);
-
-  item.correctShuffled = item.shuffledOptions.findIndex(o => o.correct);
-}
+const correctShuffled = shuffledOptions.findIndex(o => o.correct);
   const wrap = document.getElementById('optionsWrap');
   const letters = ['A','B','C','D'];
 item.shuffledOptions.forEach((option, idx) => {
