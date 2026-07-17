@@ -368,6 +368,49 @@ footer{
   outline:2px solid var(--cyan);
   outline-offset:2px;
 }
+.question-meta {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.difficulty {
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:0.8rem;
+  font-weight:bold;
+}
+
+.difficulty.easy {
+  background:#dff5df;
+}
+
+.difficulty.medium {
+  background:#fff1c7;
+}
+
+.difficulty.hard {
+  background:#ffd6d6;
+}
+
+.lore-tags {
+  margin:10px 0;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.lore-tags span {
+  font-size:0.8rem;
+  opacity:0.7;
+}
+
+.champions {
+  font-size:0.85rem;
+  margin-bottom:15px;
+  opacity:0.8;
+}
 @media (prefers-reduced-motion: reduce){
   *{transition:none !important;}
 }
