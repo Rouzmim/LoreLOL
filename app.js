@@ -112,8 +112,7 @@ function renderGame(){
     </div>
     <footer>Quiz de trivia créé pour les fans — League of Legends et son univers appartiennent à Riot Games.</footer>
   `;
-  buildDots();
-  renderQuestion();
+
   buildDots();
 renderQuestion();
 
