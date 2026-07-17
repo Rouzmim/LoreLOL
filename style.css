@@ -438,12 +438,14 @@ footer{
 
 
 .btn.danger{
-  background:#7a1f1f;
-  color:white;
-  border:none;
+  background:transparent;
+  color:var(--text-muted);
+  border:1px solid var(--line);
 }
 
 .btn.danger:hover{
-  background:#992828;
+  border-color:var(--wrong);
+  color:var(--wrong);
+  background:rgba(209,106,106,.08);
 }
 
