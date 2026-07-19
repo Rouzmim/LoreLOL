@@ -80,7 +80,7 @@ h1 span{color:var(--gold);}
 }
 .mode-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
+  grid-template-columns:repeat(2, 1fr);
   gap:16px;
 }
 .mode-card{
@@ -237,47 +237,6 @@ main.card::before{
 .opt.is-correct{border-color:var(--gold); background:rgba(201,168,118,.12); color:var(--gold);}
 .opt.is-wrong{border-color:var(--wrong); background:rgba(209,106,106,.12); color:#e7a6a6;}
 
-.vf-options{
-  grid-template-columns:1fr 1fr;
-}
-.vf-opt{
-  justify-content:center;
-  font-family:'Cinzel',serif;
-  font-weight:600;
-  font-size:16px;
-  text-align:center;
-}
-
-/* ---------- Qui-suis-je ---------- */
-.clues{
-  margin-bottom:22px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.clue{
-  margin:0;
-  padding:14px 16px;
-  background:var(--surface-2);
-  border-left:2px solid var(--violet);
-  border-radius:var(--radius);
-  font-size:15px;
-  line-height:1.5;
-}
-.clue-index{
-  display:block;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--violet);
-  margin-bottom:4px;
-}
-.reveal-btn{
-  align-self:flex-start;
-  margin-top:4px;
-}
-
 /* ---------- Feedback ---------- */
 .feedback{
   margin-top:20px;
@@ -382,20 +341,6 @@ footer{
   font-size: 0.85rem;
 }
 
-.difficulty.easy {
-  background: #d9f2d9;
-  color: #176b17;
-}
-
-.difficulty.medium {
-  background: #ffe6b3;
-  color: #8a5200;
-}
-
-.difficulty.hard {
-  background: #ffd6d6;
-  color: #9b0000;
-}
 
 .difficulty.easy {
   background:#dff5df;
@@ -448,3 +393,106 @@ footer{
   background:rgba(209,106,106,.08);
 }
 
+/* ---------- Mode difficile : réponse libre ---------- */
+
+#answerInput{
+  width:100%;
+  min-height:54px;
+  margin-top:10px;
+  margin-bottom:14px;
+
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  color:var(--text);
+
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+
+  padding:15px 18px;
+  border-radius:var(--radius);
+
+  outline:none;
+  transition:border-color .2s ease, background .2s ease;
+}
+
+#answerInput::placeholder{
+  color:var(--text-muted);
+}
+
+
+#answerInput:focus{
+  border-color:var(--gold);
+  background:#242942;
+}
+
+
+#answerInput:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+#validateAnswer{
+  width:100%;
+  margin-top:4px;
+  margin-bottom:10px;
+
+  font-size:13px;
+  padding:14px 20px;
+
+  transition:
+    background .15s ease,
+    transform .15s ease;
+}
+
+
+#validateAnswer:hover{
+  background:rgba(201,168,118,.08);
+  transform:translateY(-1px);
+}
+
+.life-counter{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  color:var(--text-muted);
+}
+
+
+.life{
+  display:inline-block;
+  margin-left:5px;
+  font-size:18px;
+}
+
+
+.life.active{
+  color:var(--gold);
+}
+
+
+.life.lost{
+  color:var(--line);
+  opacity:.5;
+}
+
+@media(max-width:640px){
+
+.header-actions{
+  width:100%;
+  justify-content:space-between;
+}
+
+
+.score-box{
+  text-align:right;
+}
+
+
+#answerInput{
+  font-size:16px;
+}
+
+}
+
+main.card.difficult-mode{
+  border-color:rgba(201,168,118,.35);
+}
