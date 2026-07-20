@@ -138,6 +138,9 @@ h1 span{color:var(--gold);}
   gap:20px;
   align-items:start;
 }
+.layout.single{
+  grid-template-columns:1fr;
+}
 nav.dots{
   position:sticky;
   top:20px;
@@ -206,7 +209,7 @@ main.card::before{
   max-width:52ch;
 }
 
-/* ---------- Options QCM / VF / QSQ ---------- */
+/* ---------- Options QCM ---------- */
 .options{
   display:grid;
   gap:10px;
@@ -233,7 +236,7 @@ main.card::before{
   flex-shrink:0;
 }
 .opt:hover:not(:disabled){border-color:var(--gold);}
-.opt:disabled{cursor:default;}
+.opt:disabled{cursor:default; opacity:.7;}
 .opt.is-correct{border-color:var(--gold); background:rgba(201,168,118,.12); color:var(--gold);}
 .opt.is-wrong{border-color:var(--wrong); background:rgba(209,106,106,.12); color:#e7a6a6;}
 
@@ -291,7 +294,7 @@ main.card::before{
   color:var(--text);
   margin-bottom:6px;
 }
-.final .tally span{color:var(--gold);}
+.final .tally span{color:var(--gold); font-size:20px;}
 .final-buttons{
   display:flex;
   gap:12px;
@@ -341,17 +344,19 @@ footer{
   font-size: 0.85rem;
 }
 
-
 .difficulty.easy {
   background:#dff5df;
+  color:#176b17;
 }
 
 .difficulty.medium {
   background:#fff1c7;
+  color:#8a5200;
 }
 
 .difficulty.hard {
   background:#ffd6d6;
+  color:#9b0000;
 }
 
 .lore-tags {
@@ -379,7 +384,6 @@ footer{
   align-items:center;
   gap:12px;
 }
-
 
 .btn.danger{
   background:transparent;
@@ -419,12 +423,10 @@ footer{
   color:var(--text-muted);
 }
 
-
 #answerInput:focus{
   border-color:var(--gold);
   background:#242942;
 }
-
 
 #answerInput:disabled{
   opacity:.6;
@@ -444,8 +446,7 @@ footer{
     transform .15s ease;
 }
 
-
-#validateAnswer:hover{
+#validateAnswer:hover:not(:disabled){
   background:rgba(201,168,118,.08);
   transform:translateY(-1px);
 }
@@ -454,8 +455,10 @@ footer{
   font-family:'JetBrains Mono',monospace;
   font-size:13px;
   color:var(--text-muted);
+  display:flex;
+  align-items:center;
+  gap:4px;
 }
-
 
 .life{
   display:inline-block;
@@ -463,11 +466,9 @@ footer{
   font-size:18px;
 }
 
-
 .life.active{
-  color:var(--gold);
+  color:var(--wrong);
 }
-
 
 .life.lost{
   color:var(--line);
@@ -475,22 +476,16 @@ footer{
 }
 
 @media(max-width:640px){
-
-.header-actions{
-  width:100%;
-  justify-content:space-between;
-}
-
-
-.score-box{
-  text-align:right;
-}
-
-
-#answerInput{
-  font-size:16px;
-}
-
+  .header-actions{
+    width:100%;
+    justify-content:space-between;
+  }
+  .score-box{
+    text-align:right;
+  }
+  #answerInput{
+    font-size:16px;
+  }
 }
 
 main.card.difficult-mode{
